@@ -3,10 +3,8 @@ package com.example.employeedirectoryapplication.view
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.employeedirectoryapplication.Response
 import com.example.employeedirectoryapplication.databinding.ActivityMainBinding
 import com.example.employeedirectoryapplication.util.EmployeeListAdapter
 import com.example.employeedirectoryapplication.viewModel.ActivityViewModel
@@ -23,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         setEmployeeAdapter()
         viewModel = ViewModelProvider(this).get(ActivityViewModel::class.java)
         viewModel.makeApiCall()
-        viewModel.getEmployeeListObserver().observe(this, Observer<Response> {
+        viewModel.getEmployeeListObserver().observe(this, {
             if (it != null) {
                 adapter.employeeList = it
                 adapter.notifyDataSetChanged()
