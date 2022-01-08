@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Employee Directory Application</string>
+    <string name="company_employees">Company Employees</string>
 </resources>
