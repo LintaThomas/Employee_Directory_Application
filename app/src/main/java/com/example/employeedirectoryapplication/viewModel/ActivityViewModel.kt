@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.employeedirectoryapplication.Response
+import com.example.employeedirectoryapplication.ResponseItem
 import com.example.employeedirectoryapplication.network.ApiService
 import com.example.employeedirectoryapplication.network.RetroInstance
 import io.reactivex.Observer
@@ -12,9 +13,9 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 class ActivityViewModel : ViewModel() {
-    var employeeList: MutableLiveData<Response> = MutableLiveData()
+    var employeeList: MutableLiveData<Array<ResponseItem>> = MutableLiveData()
 
-    fun getEmployeeListObserver(): MutableLiveData<Response> {
+    fun getEmployeeListObserver(): MutableLiveData<Array<ResponseItem>> {
         return employeeList
     }
 
@@ -27,8 +28,8 @@ class ActivityViewModel : ViewModel() {
             .subscribe(getEmployeeListObserverRx())
     }
 
-    private fun getEmployeeListObserverRx(): Observer<Response> {
-        return object : Observer<Response> {
+    private fun getEmployeeListObserverRx(): Observer<Array<ResponseItem>> {
+        return object : Observer<Array<ResponseItem>> {
             override fun onComplete() {
 
             }
@@ -38,7 +39,7 @@ class ActivityViewModel : ViewModel() {
                 employeeList.postValue(null)
             }
 
-            override fun onNext(t: Response) {
+            override fun onNext(t: Array<ResponseItem>) {
                 employeeList.postValue(t)
             }
 

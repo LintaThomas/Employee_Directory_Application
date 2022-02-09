@@ -1,19 +1,23 @@
 package com.example.employeedirectoryapplication.util
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.employeedirectoryapplication.Response
 
 
 import com.example.employeedirectoryapplication.R
+import com.example.employeedirectoryapplication.ResponseItem
+import com.example.employeedirectoryapplication.view.EmployeeDetailsActivity
 
 class EmployeeListAdapter : RecyclerView.Adapter<EmployeeListAdapter.EmployeeViewHolder>() {
-     var employeeList : Response? = null
+     var employeeList : Array<ResponseItem>? = null
 
     class EmployeeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var tvEmployeeName : TextView =itemView.findViewById(R.id.tv_employees_Name)
@@ -28,22 +32,23 @@ class EmployeeListAdapter : RecyclerView.Adapter<EmployeeListAdapter.EmployeeVie
     }
 
     override fun onBindViewHolder(holder: EmployeeViewHolder, position: Int) {
-        if(employeeList?.response !=null) {
+        if(employeeList?.get(position)!=null) {
             holder.tvEmployeeName.text =
-                employeeList!!.response?.get(position)?.name
-            holder.tvCompanyName.text
-            employeeList!!.response?.get(position)?.company
-            val url =  employeeList!!.response?.get(position)?.profileImage
+                employeeList!![position].name
+            holder.tvCompanyName.text =
+                employeeList!![position].company?.name ?:""
+            val url = employeeList!![position].profileImage
             Glide.with(holder.ivEmployeePhoto)
                 .load(url)
                 .circleCrop()
                 .into(holder.ivEmployeePhoto)
 
         }
+
     }
 
     override fun getItemCount(): Int{
-        return employeeList?.response?.size ?: 0
+        return employeeList?.size ?: 0
 
     }
 }
